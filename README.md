@@ -22,7 +22,7 @@ Nebula Spark Connector support spark 2.2 and 2.4.
    $ mvn clean package -Dmaven.test.skip=true -Dgpg.skip -Dmaven.javadoc.skip=true
    ```
 
-    After the packaging, you can see the newly generated nebula-spark-connector-3.0-SNAPSHOT.jar under the nebula-spark-connector/nebula-spark-connector/target/ directory.
+    After the packaging, you can see the newly generated nebula-spark-connector-3.0.0.jar under the nebula-spark-connector/nebula-spark-connector/target/ directory.
 
 ## New Features (Compared to Nebula Spark Connector 1.0)
 * Supports more connection configurations, such as timeout, connectionRetry, and executionRetry.
@@ -40,7 +40,7 @@ Nebula Spark Connector support spark 2.2 and 2.4.
   <dependency>
      <groupId>com.vesoft</groupId>
      <artifactId>nebula-spark-connector</artifactId>
-     <version>3.0-SNAPSHOT</version>
+     <version>3.0.0</version>
   </dependency>
   ```
   
