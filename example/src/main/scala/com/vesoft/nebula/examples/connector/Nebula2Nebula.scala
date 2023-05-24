@@ -26,6 +26,7 @@ import org.apache.commons.cli.{
   ParseException,
   PosixParser
 }
+import org.apache.spark.sql.functions.{col, regexp_replace}
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.collection.mutable.ListBuffer
@@ -288,6 +289,12 @@ object Nebula2Nebula {
       vertex = vertex.repartition(writeParallel)
     }
 
+    if (tag.equals("tag_online_user_beinvited_workflow_m3")) {
+      vertex = vertex.withColumn(
+        "pre_assist_time",
+        regexp_replace(col("pre_assist_time"), "00-00-00T00:00:00.000000", null))
+    }
+
     val nebulaWriteVertexConfig: WriteNebulaVertexConfig = WriteNebulaVertexConfig
       .builder()
       .withSpace(targetSpace)
@@ -328,6 +335,14 @@ object Nebula2Nebula {
 
     if (readPartition != writeParallel) {
       edgeDf = edgeDf.repartition(writeParallel)
+    }
+
+    if (edge.equals("online_u2u_beinvited_workflow_m3")) {
+      edgeDf = edgeDf
+        .withColumn("pre_assist_time",
+                    regexp_replace(col("pre_assist_time"), "00-00-00T00:00:00.000000", null))
+        .withColumn("assist_time",
+                    regexp_replace(col("assist_time"), "00-00-00T00:00:00.000000", null))
     }
 
     val nebulaWriteEdgeConfig: WriteNebulaEdgeConfig = WriteNebulaEdgeConfig
